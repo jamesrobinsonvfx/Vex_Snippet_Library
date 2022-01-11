@@ -9,7 +9,7 @@ from . import vex_highlighter
 
 class LineNumberArea(QtWidgets.QWidget):
     def __init__(self, editor):
-        super().__init__(editor)
+        super(LineNumberArea, self).__init__(editor)
         self.myeditor = editor
         self.bg_color = QtGui.QColor(43, 43, 43)
         self.line_color = QtGui.QColor(75, 75, 75)
@@ -195,7 +195,7 @@ class VexEditor(QtWidgets.QPlainTextEdit):
             self._update_line_num_width(0)
 
     def resizeEvent(self, event):
-        super().resizeEvent(event)
+        super(VexEditor, self).resizeEvent(event)
 
         cr = self.contentsRect()
         self.line_num_area.setGeometry(
