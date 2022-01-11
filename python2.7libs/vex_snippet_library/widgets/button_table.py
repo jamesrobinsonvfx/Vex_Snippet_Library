@@ -15,7 +15,7 @@ class ButtonDelegate(QtWidgets.QStyledItemDelegate):
     copyRequest = QtCore.Signal(QtCore.QModelIndex)
 
     def __init__(self, parent):
-        super().__init__(parent)
+        super(ButtonDelegate, self).__init__(parent)
 
     def paint(self, painter, option, index):
         if isinstance(self.parent(), QtWidgets.QAbstractItemView):
@@ -111,7 +111,6 @@ class SnippetModel(QtCore.QAbstractTableModel):
                 return True
             elif role == QtCore.Qt.UserRole:
                 self.table_data[index.row()] = value
-                # self.dataChanged.emit(index, index, [QtCore.Qt.DecorationRole])
                 return True
         else:
             return False
@@ -174,7 +173,6 @@ class ButtonTable(QtWidgets.QTableView):
         btn_delegate.copyRequest.connect(self.btn_callback)
         self.setItemDelegateForColumn(1, btn_delegate)
         self.model.rowsInserted.connect(self.scrollToBottom)
-        self.filter.dynamicSortFilterChanged.connect(self.filter_changed)
 
         v_header = self.verticalHeader()
         v_header.hide()
@@ -203,9 +201,6 @@ class ButtonTable(QtWidgets.QTableView):
                 super(ButtonTable, self).mousePressEvent(event)
             elif index.column() == 1:  # column behind button
                 self.parent().add_btn.setFocus()  # focus fix
-
-    def filter_changed(self):
-        logging.debug('filter changed')
 
     def add_item(self, snippet):
         self.model.beginResetModel()
